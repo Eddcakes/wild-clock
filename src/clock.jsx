@@ -1,13 +1,39 @@
 import React, { useState, useEffect } from 'react';
 
 function Clock(){
-  const [time, setTime] = useState([initialState])
+  const clockStyle = {
+    fontFamily: '"Lucida Console", Monaco, monospace',
+  }
+  const [counter, setCounter] = useState(0)
+  //can we use our compose function when we initialize our clock?
+  const [clock, setClock] = useState(
+    //serializeClockTime(new Date())
+    getClockTime()
+    )
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setCounter(counter + 1);
+      setClock(
+        //serializeClockTime(new Date())
+        getClockTime()
+      );
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  });
   return (
     <div className="clock">
-      <span>
-        {console.log(`time hours: ${time.hours} `)}
-        {}
-      </span>
+      <p>
+        {counter}
+      </p>
+      <p>
+        <span style={clockStyle}>
+          {`${clock.hours}:${clock.minutes}:${clock.seconds}`}
+          <span>{clock.ampm}</span>
+        </span>
+      </p>
     </div>
   );
 }
