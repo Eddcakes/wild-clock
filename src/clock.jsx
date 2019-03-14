@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+//move all clock set up functions into another file
+
 function Clock(){
   const clockStyle = {
     fontFamily: '"Lucida Console", Monaco, monospace',
@@ -12,7 +14,7 @@ function Clock(){
     )
 
   useEffect(() => {
-    let timer = setTimeout(() => {
+    let timer = setInterval(() => {
       setCounter(counter + 1);
       setClock(
         //serializeClockTime(new Date())
@@ -85,7 +87,7 @@ const doubleDigits = civilianTime =>
 const getClockTime = compose(
   getCurrentTime,
   serializeClockTime,
-  convertToCivilianTime,
   appendAMPM,
+  convertToCivilianTime,
   doubleDigits
 )
