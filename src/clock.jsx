@@ -3,52 +3,76 @@ import React, { useState, useEffect } from 'react';
 //move all clock set up functions into another file
 
 function Clock(){
-  const clockStyle = {
-    fontFamily: '"Lucida Console", Monaco, monospace',
-  }
-  const [counter, setCounter] = useState(0)
-  //can we use our compose function when we initialize our clock?
+
   const [clock, setClock] = useState(
-    //serializeClockTime(new Date())
     getClockTime()
     )
 
   useEffect(() => {
     let timer = setInterval(() => {
-      setCounter(counter + 1);
       setClock(
-        //serializeClockTime(new Date())
         getClockTime()
       );
-    }, 1000);
+    }, oneSecond);
     return () => {
       clearInterval(timer);
     };
   });
   return (
     <div className="clock">
-      <p>
-        {counter}
-      </p>
-      <p>
-        <span style={clockStyle}>
-          {`${clock.hours}:${clock.minutes}:${clock.seconds}`}
-          <span>{clock.ampm}</span>
-        </span>
-      </p>
+        <div className="pulse" style={clockStyle}>
+          <span style={digitStyle}>
+            {`${clock.hours}:${clock.minutes}:${clock.seconds}`}
+          </span>
+          <span style={tzStyle}>{clock.offset}</span>
+          <span style={ampmStyle}>{clock.ampm}</span>
+        </div>
     </div>
   );
 }
 export default Clock;
 
-const initialState = () => {return {hours: '', minutes: '', seconds: '', ampm: ''}}
+/*clock styles*/
+/* https://github.com/facebook/react/issues/5783 -moz-fit-content*/
+const digitSize = '6rem'
+const clockDetailSize = '2rem'
+const clockStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gridTemplateRows: '1fr 1fr',
+  gridTemplateAreas: "'main main main main' 'tz . . ampm'",
+  width: 'fit-content',
+  margin: '0 auto',
+  fontFamily: '"Lucida Console", Monaco, monospace',
+}
+const digitStyle = {
+  gridArea: 'main',
+  fontSize: digitSize,
+}
+const ampmStyle ={
+  gridArea: 'ampm',
+  fontSize: clockDetailSize,
+  marginTop: '-1.2rem',
+  marginRight: '15%',
+  textAlign: 'right'
+}
+const tzStyle ={
+  gridArea: 'tz',
+  fontSize: clockDetailSize,
+  marginTop: '-1.2rem',
+  marginLeft: '15%',
+  textAlign: 'left'
+}
 const oneSecond = () => 1000
 const getCurrentTime = () => new Date()
 
+//added offset -> where do we want to "guess" timezone from the offset?
+//also need to add the offset to the time if we want to show the locale time
 const serializeClockTime = date => ({
-  hours: date.getHours(),
-  minutes: date.getMinutes(),
-  seconds: date.getSeconds(),
+  hours: date.getUTCHours(),
+  minutes: date.getUTCMinutes(),
+  seconds: date.getUTCSeconds(),
+  offset: date.getTimezoneOffset(),
 })
 const civilianHours = clockTime => ({
   ...clockTime,

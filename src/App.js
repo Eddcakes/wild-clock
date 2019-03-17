@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import Clock from './clock'
 
@@ -9,7 +9,6 @@ import Clock from './clock'
 function App() {
     return (
       <div className="App">
-        <p>this will by my clock app</p> 
         <Clock />
       </div>
     );
