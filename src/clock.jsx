@@ -33,7 +33,9 @@ function Clock(){
 export default Clock;
 
 /*clock styles*/
-/* https://github.com/facebook/react/issues/5783 -moz-fit-content*/
+/* https://github.com/facebook/react/issues/5783 -moz-fit-content
+ie doesnt like this implementation of grid. wewlad
+*/
 const digitSize = '6rem'
 const clockDetailSize = '2rem'
 const clockStyle = {
@@ -41,7 +43,7 @@ const clockStyle = {
   gridTemplateColumns: 'repeat(4, 1fr)',
   gridTemplateRows: '1fr 1fr',
   gridTemplateAreas: "'main main main main' 'tz . . ampm'",
-  width: 'fit-content',
+  width: `calc(${digitSize} * 5)`,
   margin: '0 auto',
   fontFamily: '"Lucida Console", Monaco, monospace',
 }
