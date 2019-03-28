@@ -1,0 +1,45 @@
+$digit-size : 6rem;
+$info-size: 2rem;
+
+.clock{
+    margin: 0 auto;
+    width: $digit-size * 5;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+.digits{
+    display: block;
+    font-size: $digit-size;
+}
+.ampm{
+    float: right;
+    font-size: $info-size;
+    margin-top: -1.2rem;
+    margin-right: 15%;
+    text-align: right;
+}
+.timezone{
+    float: left;
+    font-size: $info-size;
+    margin-top: -1.2rem;
+    margin-left: 15%;
+    text-align: left;
+}
+
+@supports (display: grid){
+    .clock{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: 'main main main main' 'tz . . ampm';
+        width: fit-content;
+    }
+    .digits{
+        grid-area: main;
+    }
+    .ampm{
+        grid-area: ampm;
+    }
+    .timezone{
+        grid-area: tz;
+    }
+}
