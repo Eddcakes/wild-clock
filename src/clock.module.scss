@@ -30,7 +30,7 @@ $info-size: 2rem;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: 1fr 1fr;
-        grid-template-areas: 'main main main main' 'tz . . ampm';
+        grid-template-areas: 'main main main main' 'tz tz ampm ampm';
         width: fit-content;
     }
     .digits{

@@ -2,24 +2,30 @@ export const oneSecond = () => 1000
 const getCurrentTime = () => new Date()
 
 //added offset -> where do we want to "guess" timezone from the offset?
-//also need to add the offset to the time if we want to show the locale time
-const serializeClockTime = date => ({
-  hours: date.getUTCHours(),
-  minutes: date.getUTCMinutes(),
-  seconds: date.getUTCSeconds(),
-  offset: date.getTimezoneOffset(),
+const serializeClockTime = date => {
+  let timeDif = date.getTimezoneOffset() * 60000
+  let newDate = date
+  if (timeDif !== 0){
+    newDate = new Date(date.getTime() + timeDif)
+  }
+  return {
+    hours: newDate.getUTCHours(),
+    minutes: newDate.getUTCMinutes(),
+    seconds: newDate.getUTCSeconds(),
+    offset: newDate.getTimezoneOffset() / 60,
+  }
+}
+const appendAMPM = clockTime => ({
+  ...clockTime,
+  ampm: (clockTime.hours >= 12) ?
+  "pm" :
+  "am"
 })
 const civilianHours = clockTime => ({
   ...clockTime,
   hours: (clockTime.hours > 12) ?
   clockTime.hours - 12 : 
   clockTime.hours
-})
-const appendAMPM = clockTime => ({
-  ...clockTime,
-  ampm: (clockTime.hours >= 12) ?
-  "pm" :
-  "am"
 })
 const prependZero = key => clockTime => ({
   ...clockTime,

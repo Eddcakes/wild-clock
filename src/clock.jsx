@@ -23,7 +23,9 @@ function Clock({effect}){
         <span className={styles.digits}>
           {`${clock.hours}:${clock.minutes}:${clock.seconds}`}
         </span>
-        <span className={styles.timezone}>{clock.offset}</span>
+        <span className={styles.timezone}>
+          UTC{clock.offset > 0 ? `+${clock.offset}` : clock.offset === 0 ? "" : `${clock.offset}`}
+        </span>
         <span className={styles.ampm}>{clock.ampm}</span>
       </div>
     </div>
