@@ -1,20 +1,14 @@
 export const oneSecond = () => 1000
 const getCurrentTime = () => new Date()
-
-//added offset -> where do we want to "guess" timezone from the offset?
 const serializeClockTime = date => {
-  let timeDif = date.getTimezoneOffset() * 60000
-  let newDate = date
-  if (timeDif !== 0){
-    newDate = new Date(date.getTime() + timeDif)
-  }
   return {
-    hours: newDate.getUTCHours(),
-    minutes: newDate.getUTCMinutes(),
-    seconds: newDate.getUTCSeconds(),
-    offset: newDate.getTimezoneOffset() / 60,
+    hours: date.getHours(),
+    minutes: date.getMinutes(),
+    seconds: date.getSeconds(),
+    offset:  invertNumber(date.getTimezoneOffset() / 60),
   }
 }
+const invertNumber = number => number *= -1
 const appendAMPM = clockTime => ({
   ...clockTime,
   ampm: (clockTime.hours >= 12) ?
