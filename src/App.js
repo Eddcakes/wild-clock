@@ -7,6 +7,8 @@ function App() {
     return (
       <div className="App">
         <Clock effect="pulse"/>
+        <Clock effect="rainbow"/>
+        <Clock effect="spin"/>
       </div>
     );
 }
